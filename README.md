@@ -25,12 +25,22 @@ OpenAI's official dashboard is the most accurate place to inspect detailed billi
 
 ## Current repository status
 
-This starter repo ships a working macOS menu bar shell plus a demo-data flow.
+This starter repo ships a working macOS menu bar shell plus a demo-data flow and a first live OpenAI usage path.
 
 - `DemoUsageProvider` is fully usable now.
-- `OpenAIUsageClient` is intentionally isolated and currently returns a clear "live API unavailable" error until the final endpoint contract is wired.
+- `OpenAIUsageClient` now targets OpenAI organization usage and cost endpoints for recent daily summaries.
+- Live mode may require an admin-capable OpenAI API key for organization-level usage endpoints.
 
-That keeps the repo pushable and useful today, while preserving a clean path for live integration next.
+That keeps the repo useful in demo mode today while preserving a clean live integration boundary.
+
+## Live OpenAI setup
+
+1. Open Settings in TokenPet.
+2. Turn off `Use demo mode`.
+3. Paste an OpenAI API key.
+4. Save and refresh.
+
+If the key does not have access to organization usage endpoints, the app will fall back to its cached or demo path and show a clear error message.
 
 ## Project structure
 
@@ -57,7 +67,6 @@ If you later install full Xcode, you can open the package in Xcode and continue 
 ## Roadmap
 
 ### v1
-- Finish live OpenAI usage endpoint wiring
 - Add launch-at-login
 - Improve pet animation states
 

@@ -63,6 +63,12 @@ This is enough to validate the product shape before animation complexity grows.
 ### 4. Live provider is isolated
 `OpenAIUsageClient` sits behind `UsageProviding` so endpoint churn or auth differences do not leak into the UI.
 
+Current live target:
+- `GET /v1/organization/usage/completions`
+- `GET /v1/organization/costs`
+
+TokenPet merges these two sources into a 7-day `UsageSummary`.
+
 ## What to avoid in v1
 
 - multi-provider support

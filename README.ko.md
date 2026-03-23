@@ -27,12 +27,22 @@ TokenPet은 OpenAI API 사용량을 작은 메뉴바 펫으로 보여주는 macO
 
 ## 현재 저장소 상태
 
-이 starter repo는 실제로 동작하는 macOS 메뉴바 셸과 demo data 흐름을 포함합니다.
+이 starter repo는 실제로 동작하는 macOS 메뉴바 셸과 demo data 흐름, 그리고 첫 번째 live OpenAI usage 경로를 포함합니다.
 
 - `DemoUsageProvider`는 바로 사용할 수 있습니다.
-- `OpenAIUsageClient`는 live 경로를 분리해둔 상태이며, 최종 endpoint 계약이 정리되면 이어서 붙일 수 있습니다.
+- `OpenAIUsageClient`는 OpenAI organization usage / costs endpoint를 사용해 최근 일별 summary를 가져오도록 구성되어 있습니다.
+- live mode는 organization usage endpoint 접근 권한이 있는 OpenAI API key가 필요할 수 있습니다.
 
-이렇게 해두면 오늘 바로 push 가능한 starter repo가 되면서도, 다음 단계에서 live OpenAI usage 연동을 깔끔하게 이어갈 수 있습니다.
+이렇게 해두면 demo mode는 바로 쓸 수 있고, live mode도 같은 구조 안에서 이어서 검증할 수 있습니다.
+
+## Live OpenAI 설정
+
+1. TokenPet Settings를 엽니다.
+2. `Use demo mode`를 끕니다.
+3. OpenAI API key를 입력합니다.
+4. 저장 후 새로고침합니다.
+
+해당 key가 organization usage endpoint 권한이 없으면, 앱은 cached/demo 흐름으로 안전하게 남고 오류 메시지를 표시합니다.
 
 ## 프로젝트 구조
 
@@ -59,7 +69,6 @@ swift run
 ## 로드맵
 
 ### v1
-- live OpenAI usage endpoint 연결
 - launch-at-login 추가
 - 펫 상태 애니메이션 개선
 
