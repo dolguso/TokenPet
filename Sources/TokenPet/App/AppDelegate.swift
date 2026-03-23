@@ -9,6 +9,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private weak var appModel: TokenPetAppModel?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        guard handleExistingInstances() else {
+            return
+        }
+
         let appModel = TokenPetAppModel.shared
         install(appModel: appModel)
 
@@ -19,6 +23,39 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         Task {
             await appModel.bootstrap()
         }
+    }
+
+    private func handleExistingInstances() -> Bool {
+        let currentProcessIdentifier = ProcessInfo.processInfo.processIdentifier
+        let executableName = ProcessInfo.processInfo.processName
+
+        let duplicateApps = NSWorkspace.shared.runningApplications.filter { app in
+            guard app.processIdentifier != currentProcessIdentifier else {
+                return false
+            }
+
+            if let executableURL = app.executableURL {
+                return executableURL.lastPathComponent == executableName
+            }
+
+            return app.localizedName == executableName
+        }
+
+        guard !duplicateApps.isEmpty else {
+            return true
+        }
+
+#if DEBUG
+        for app in duplicateApps {
+            app.terminate()
+        }
+
+        return true
+#else
+        duplicateApps.first?.activate()
+        NSApp.terminate(nil)
+        return false
+#endif
     }
 
     func install(appModel: TokenPetAppModel) {
