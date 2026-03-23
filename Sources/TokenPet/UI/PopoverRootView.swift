@@ -2,6 +2,7 @@ import SwiftUI
 
 struct PopoverRootView: View {
     @ObservedObject var appModel: TokenPetAppModel
+    @State private var showingSettings = false
 
     var body: some View {
         VStack(spacing: 16) {
@@ -33,7 +34,9 @@ struct PopoverRootView: View {
 
                 Spacer()
 
-                SettingsLink {
+                Button {
+                    showingSettings = true
+                } label: {
                     Label("Settings", systemImage: "gearshape")
                 }
             }
@@ -47,6 +50,11 @@ struct PopoverRootView: View {
         }
         .padding(16)
         .frame(width: 340)
+        .sheet(isPresented: $showingSettings) {
+            SettingsView(appModel: appModel)
+                .frame(width: 420, height: 320)
+                .padding(20)
+        }
     }
 }
 
